@@ -1,9 +1,19 @@
+"use client";
+
+import { useTransactions } from "@/hooks/useTransactions";
+import { TransactionList } from "@/components/transactions/TransactionList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDownIcon, ArrowUpIcon, Wallet } from "lucide-react";
 
 export default function Home() {
+  const { transactions } = useTransactions();
+
+  const totalIncome = transactions?.filter(t => t.transactionType === "INCOME").reduce((acc, t) => acc + t.amount, 0) || 0;
+  const totalExpense = transactions?.filter(t => t.transactionType === "EXPENSE").reduce((acc, t) => acc + t.amount, 0) || 0;
+  const balance = totalIncome - totalExpense;
+
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 space-y-6 max-w-lg mx-auto">
       <header className="flex items-center justify-between mt-4">
         <div>
           <h1 className="text-2xl font-bold">Hello!</h1>
@@ -14,20 +24,20 @@ export default function Home() {
         </div>
       </header>
 
-      <Card className="bg-gradient-to-br from-primary/80 to-primary text-primary-foreground border-none shadow-lg">
+      <Card className="bg-slate-900 text-white dark:bg-slate-800 border-none shadow-lg">
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm font-medium text-primary-foreground/80">Total Balance</CardTitle>
+          <CardTitle className="text-sm font-medium text-slate-300">Total Balance</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-4xl font-bold mb-4">$0.00</div>
+          <div className="text-4xl font-bold mb-4">${balance.toFixed(2)}</div>
           <div className="flex gap-4">
             <div className="flex items-center gap-1">
               <div className="bg-white/20 p-1 rounded-full">
                 <ArrowDownIcon className="h-3 w-3" />
               </div>
               <div>
-                <div className="text-xs text-primary-foreground/80">Income</div>
-                <div className="text-sm font-semibold">$0.00</div>
+                <div className="text-xs text-slate-300">Income</div>
+                <div className="text-sm font-semibold">${totalIncome.toFixed(2)}</div>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -35,8 +45,8 @@ export default function Home() {
                 <ArrowUpIcon className="h-3 w-3" />
               </div>
               <div>
-                <div className="text-xs text-primary-foreground/80">Expense</div>
-                <div className="text-sm font-semibold">$0.00</div>
+                <div className="text-xs text-slate-300">Expense</div>
+                <div className="text-sm font-semibold">${totalExpense.toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -45,14 +55,10 @@ export default function Home() {
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Recent Transactions</h2>
-          <button className="text-sm text-primary font-medium">See All</button>
+          <h2 className="text-lg font-semibold">Transactions</h2>
         </div>
         
-        <div className="flex flex-col items-center justify-center py-10 text-muted-foreground">
-          <p className="text-sm">No transactions yet.</p>
-          <p className="text-xs mt-1">Tap + to add a new expense.</p>
-        </div>
+        <TransactionList />
       </div>
     </div>
   );
