@@ -3,10 +3,13 @@ import Dexie, { Table } from "dexie";
 export interface Transaction {
   id?: number;
   amount: number;
-  type: "income" | "expense";
   category: string;
-  date: Date;
-  note?: string;
+  description: string;
+  transactionType: "INCOME" | "EXPENSE";
+  accountType: "CASH" | "BANK";
+  transactionDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class ExpenseTrackerDB extends Dexie {
@@ -14,8 +17,8 @@ export class ExpenseTrackerDB extends Dexie {
 
   constructor() {
     super("ExpenseTrackerDB");
-    this.version(1).stores({
-      transactions: "++id, amount, type, category, date",
+    this.version(2).stores({
+      transactions: "++id, amount, category, transactionType, accountType, transactionDate, createdAt",
     });
   }
 }
