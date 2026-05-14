@@ -26,7 +26,7 @@ export function TransactionFilters({ filters, onFilterChange }: TransactionFilte
 
   return (
     <div className="flex flex-wrap gap-2 pb-2">
-      <Select value={filters.type || undefined} onValueChange={(val) => handleChange("type", val)}>
+      <Select value={filters.type || null} onValueChange={(val) => handleChange("type", val)}>
         <SelectTrigger className="w-[120px] shrink-0 h-9 bg-background">
           <SelectValue placeholder="Type" />
         </SelectTrigger>
@@ -38,7 +38,7 @@ export function TransactionFilters({ filters, onFilterChange }: TransactionFilte
         </SelectContent>
       </Select>
 
-      <Select value={filters.account || undefined} onValueChange={(val) => handleChange("account", val)}>
+      <Select value={filters.account || null} onValueChange={(val) => handleChange("account", val)}>
         <SelectTrigger className="w-[130px] shrink-0 h-9 bg-background">
           <SelectValue placeholder="Account" />
         </SelectTrigger>
@@ -50,7 +50,7 @@ export function TransactionFilters({ filters, onFilterChange }: TransactionFilte
         </SelectContent>
       </Select>
 
-      <Select value={filters.category || undefined} onValueChange={(val) => handleChange("category", val)}>
+      <Select value={filters.category || null} onValueChange={(val) => handleChange("category", val)}>
         <SelectTrigger className="w-[140px] shrink-0 h-9 bg-background">
           <SelectValue placeholder="Category" />
         </SelectTrigger>
