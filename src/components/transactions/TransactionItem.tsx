@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { Transaction } from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { ArrowDownIcon, ArrowUpIcon, CreditCard, Wallet } from "lucide-react";
 
 interface TransactionItemProps {
@@ -48,7 +48,7 @@ export function TransactionItem({ transaction, onClick }: TransactionItemProps) 
             "font-bold",
             isIncome ? "text-emerald-500" : "text-foreground"
           )}>
-            {isIncome ? "+" : "-"}${transaction.amount.toFixed(2)}
+            {isIncome ? "+" : "-"}{formatCurrency(transaction.amount)}
           </span>
         </div>
       </CardContent>
