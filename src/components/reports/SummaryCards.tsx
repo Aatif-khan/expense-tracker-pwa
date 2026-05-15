@@ -2,13 +2,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { ReportSummary } from "@/lib/analytics";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrency } from "@/hooks/useCurrency";
 import { ArrowDownIcon, ArrowUpIcon, PiggyBank, Receipt } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SummaryCardsProps { summary: ReportSummary }
 
 export function SummaryCards({ summary }: SummaryCardsProps) {
+  const { format: formatCurrency } = useCurrency();
   const cards = [
     { label: "Income",       value: summary.totalIncome,       icon: ArrowUpIcon,   color: "emerald", prefix: "+" },
     { label: "Expenses",     value: summary.totalExpenses,     icon: ArrowDownIcon, color: "red",     prefix: "-" },

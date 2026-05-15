@@ -1,9 +1,12 @@
+"use client";
+
 import { format } from "date-fns";
 import { Transaction } from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ArrowDownIcon, ArrowUpIcon, CreditCard, Wallet } from "lucide-react";
+import { useCurrency } from "@/hooks/useCurrency";
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -11,6 +14,7 @@ interface TransactionItemProps {
 }
 
 export function TransactionItem({ transaction, onClick }: TransactionItemProps) {
+  const { format: formatCurrency } = useCurrency();
   const isIncome = transaction.transactionType === "INCOME";
 
   return (

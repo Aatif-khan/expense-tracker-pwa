@@ -1,15 +1,16 @@
 "use client";
 
+import React from "react";
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
 import { PieSlice } from "@/lib/analytics";
-import { formatCurrency } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useCurrency } from "@/hooks/useCurrency";
 
 interface CategoryPieChartProps { data: PieSlice[] }
 
-const CustomTooltip = ({ active, payload }: any) => {
+const CustomTooltip = ({ active, payload, formatCurrency }: any) => {
   if (active && payload && payload.length) {
     const item = payload[0].payload as PieSlice;
     return (
@@ -23,10 +24,14 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 export function CategoryPieChart({ data }: CategoryPieChartProps) {
-  if (data.length === 0) {
+  const { format: formatCurrency } = useCurrency();
+
+  if (!data || data.length === 0) {
     return (
       <Card className="border-none shadow-sm">
-        <CardHeader className="pb-2"><CardTitle className="text-sm">Expenses by Category</CardTitle></CardHeader>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-semibold">Expenses by Category</CardTitle>
+        </CardHeader>
         <CardContent className="flex items-center justify-center h-40 text-muted-foreground text-sm">
           No expense data
         </CardContent>
@@ -55,7 +60,7 @@ export function CategoryPieChart({ data }: CategoryPieChartProps) {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip formatCurrency={formatCurrency} />} />
             <Legend
               iconType="circle"
               iconSize={8}

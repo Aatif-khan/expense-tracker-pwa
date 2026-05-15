@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { SettingsHydrator } from "@/components/settings/SettingsHydrator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* Hydrate settings from IndexedDB on boot */}
+          <SettingsHydrator />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
         </ThemeProvider>

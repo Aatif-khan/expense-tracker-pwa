@@ -1,13 +1,14 @@
 "use client";
 
 import { CategoryStat } from "@/lib/analytics";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrency } from "@/hooks/useCurrency";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 interface CategoryTableProps { stats: CategoryStat[] }
 
 export function CategoryTable({ stats }: CategoryTableProps) {
+  const { format: formatCurrency } = useCurrency();
   if (stats.length === 0) {
     return (
       <Card className="border-none shadow-sm">

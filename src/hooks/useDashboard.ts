@@ -2,12 +2,15 @@ import { useMemo } from "react";
 import { useTransactions } from "./useTransactions";
 import { Transaction } from "@/lib/db";
 import { startOfMonth, endOfMonth, subMonths, isWithinInterval } from "date-fns";
+import { useSettingsStore } from "@/lib/settingsStore";
 
 export function useDashboard() {
   const { transactions, isLoading } = useTransactions();
+  const initialCashBalance = useSettingsStore((s) => s.initialCashBalance);
+  const initialBankBalance = useSettingsStore((s) => s.initialBankBalance);
 
   return useMemo(() => {
-    if (!transactions) return { 
+    if (!transactions) return {
       isLoading: true,
       isEmpty: true,
       balances: { currentCashBalance: 0, currentBankBalance: 0, grandTotal: 0 },
@@ -19,7 +22,7 @@ export function useDashboard() {
     const now = new Date();
     const currentMonthStart = startOfMonth(now);
     const currentMonthEnd = endOfMonth(now);
-    
+
     const previousMonthStart = startOfMonth(subMonths(now, 1));
     const previousMonthEnd = endOfMonth(subMonths(now, 1));
 
@@ -53,15 +56,15 @@ export function useDashboard() {
 
       if (isCurrentMonth) {
         totalTransactionsThisMonth++;
-        
+
         if (tx.transactionType === "INCOME") {
           currentMonthIncome += tx.amount;
         } else {
           currentMonthExpenses += tx.amount;
-          
+
           // Track category spending
           categorySpending[tx.category] = (categorySpending[tx.category] || 0) + tx.amount;
-          
+
           // Track highest expense
           if (!highestExpenseTransaction || tx.amount > highestExpenseTransaction.amount) {
             highestExpenseTransaction = tx;
@@ -74,8 +77,9 @@ export function useDashboard() {
       }
     });
 
-    const currentCashBalance = cashIncome - cashExpense;
-    const currentBankBalance = bankIncome - bankExpense;
+    // Add initial balances from settings
+    const currentCashBalance = initialCashBalance + cashIncome - cashExpense;
+    const currentBankBalance = initialBankBalance + bankIncome - bankExpense;
     const grandTotal = currentCashBalance + currentBankBalance;
     const currentMonthSavings = currentMonthIncome - currentMonthExpenses;
 
@@ -94,7 +98,7 @@ export function useDashboard() {
     if (previousMonthExpenses > 0) {
       spendingComparison = ((currentMonthExpenses - previousMonthExpenses) / previousMonthExpenses) * 100;
     } else if (currentMonthExpenses > 0) {
-      spendingComparison = 100; // Increased from 0
+      spendingComparison = 100;
     }
 
     return {
@@ -117,7 +121,7 @@ export function useDashboard() {
         spendingComparison,
         highestExpenseTransaction,
       },
-      recentTransactions: transactions.slice(0, 5), // Assuming transactions are sorted newest first
+      recentTransactions: transactions.slice(0, 5),
     };
-  }, [transactions, isLoading]);
+  }, [transactions, isLoading, initialCashBalance, initialBankBalance]);
 }
