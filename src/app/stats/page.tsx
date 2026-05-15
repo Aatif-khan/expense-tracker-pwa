@@ -13,11 +13,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BarChart2, Download, PlusCircle, Target, TrendingDown, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { exportToCSV as doExport } from "@/lib/analytics";
-import { formatCurrency as fmtC } from "@/lib/utils";
+import { useCurrency } from "@/hooks/useCurrency";
 
 
 export default function StatsPage() {
   const reports = useReports();
+  const { format: fmtC } = useCurrency();
 
   // Loading skeleton
   if (reports.isLoading) {

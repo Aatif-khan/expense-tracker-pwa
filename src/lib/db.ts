@@ -12,14 +12,30 @@ export interface Transaction {
   updatedAt: Date;
 }
 
+export interface SettingRecord {
+  key: string;
+  value: string; // JSON-serialised
+}
+
 export class ExpenseTrackerDB extends Dexie {
   transactions!: Table<Transaction, number>;
+  settings!: Table<SettingRecord, string>;
 
   constructor() {
     super("ExpenseTrackerDB");
     this.version(2).stores({
-      transactions: "++id, amount, category, transactionType, accountType, transactionDate, createdAt",
+      transactions:
+        "++id, amount, category, transactionType, accountType, transactionDate, createdAt",
     });
+    this.version(3)
+      .stores({
+        transactions:
+          "++id, amount, category, transactionType, accountType, transactionDate, createdAt",
+        settings: "key",
+      })
+      .upgrade(() => {
+        // no-op migration — new table added
+      });
   }
 }
 

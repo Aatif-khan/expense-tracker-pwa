@@ -1,9 +1,9 @@
 "use client";
 
 import { AccountStat } from "@/lib/analytics";
-import { formatCurrency } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wallet, Landmark } from "lucide-react";
+import { useCurrency } from "@/hooks/useCurrency";
 
 interface AccountAnalyticsProps { stats: AccountStat }
 
@@ -17,6 +17,7 @@ function ProgressBar({ value, total, color }: { value: number; total: number; co
 }
 
 export function AccountAnalytics({ stats }: AccountAnalyticsProps) {
+  const { format: formatCurrency } = useCurrency();
   const totalSpend = stats.cashExpense + stats.bankExpense;
 
   return (

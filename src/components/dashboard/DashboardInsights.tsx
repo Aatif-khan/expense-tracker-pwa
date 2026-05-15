@@ -1,7 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Transaction } from "@/lib/db";
 import { TrendingUp, TrendingDown, Target, AlertCircle } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { useCurrency } from "@/hooks/useCurrency";
+import { useSettingsStore } from "@/lib/settingsStore";
 
 interface DashboardInsightsProps {
   insights: {
@@ -14,12 +15,16 @@ interface DashboardInsightsProps {
 }
 
 export function DashboardInsights({ insights }: DashboardInsightsProps) {
+  const { format } = useCurrency();
+  const insightsEnabled = useSettingsStore((s) => s.preferences.insightsEnabled);
   const isSpendingUp = insights.spendingComparison > 0;
+
+  if (!insightsEnabled) return null;
 
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-muted-foreground px-1">Insights</h3>
-      
+
       <div className="grid grid-cols-1 gap-3">
         {/* Spending Comparison */}
         <Card className="border-none shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-300" style={{ animationDelay: '200ms' }}>
@@ -61,7 +66,7 @@ export function DashboardInsights({ insights }: DashboardInsightsProps) {
               <div>
                 <p className="text-sm font-medium">Top Spending Category</p>
                 <p className="text-xs text-muted-foreground">
-                  {insights.highestSpendingCategory} ({formatCurrency(insights.maxCategoryAmount)})
+                  {insights.highestSpendingCategory} ({format(insights.maxCategoryAmount)})
                 </p>
               </div>
             </CardContent>
@@ -78,7 +83,7 @@ export function DashboardInsights({ insights }: DashboardInsightsProps) {
               <div className="flex-1 overflow-hidden">
                 <p className="text-sm font-medium">Largest Single Expense</p>
                 <p className="text-xs text-muted-foreground truncate">
-                  {insights.highestExpenseTransaction.category} - {formatCurrency(insights.highestExpenseTransaction.amount)}
+                  {insights.highestExpenseTransaction.category} - {format(insights.highestExpenseTransaction.amount)}
                 </p>
               </div>
             </CardContent>

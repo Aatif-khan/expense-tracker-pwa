@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/hooks/useCurrency";
+import { getCurrencySymbol } from "@/lib/currency";
 
 interface TransactionFormProps {
   initialData?: TransactionFormValues;
@@ -20,6 +22,8 @@ interface TransactionFormProps {
 }
 
 export function TransactionForm({ initialData, onSubmit, onCancel }: TransactionFormProps) {
+  const { currency } = useCurrency();
+  const symbol = getCurrencySymbol(currency);
   const {
     register,
     handleSubmit,
@@ -67,7 +71,7 @@ export function TransactionForm({ initialData, onSubmit, onCancel }: Transaction
       </div>
 
       <div className="space-y-2">
-        <Label>Amount</Label>
+        <Label>Amount ({symbol})</Label>
         <Input
           type="number"
           step="0.01"
