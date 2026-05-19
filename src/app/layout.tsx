@@ -29,6 +29,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+import { RecurringProcessor } from "@/components/recurring/RecurringProcessor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +51,7 @@ export default function RootLayout({
         >
           {/* Hydrate settings from IndexedDB on boot */}
           <SettingsHydrator />
+          <RecurringProcessor />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
         </ThemeProvider>

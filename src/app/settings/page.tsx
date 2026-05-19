@@ -56,6 +56,18 @@ export default function SettingsPage() {
       <div className="space-y-5">
         <ThemeSection settings={settings} showToast={showToast} />
         <CurrencySection settings={settings} showToast={showToast} />
+        
+        {/* Recurring Transactions Link */}
+        <div className="bg-card border rounded-2xl p-4 shadow-sm flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold">Recurring Transactions</h3>
+            <p className="text-sm text-muted-foreground">Manage automated entries</p>
+          </div>
+          <a href="/recurring" className="text-primary text-sm font-medium hover:underline">
+            Manage
+          </a>
+        </div>
+
         <InitialBalanceSection settings={settings} showToast={showToast} />
         <AppPreferencesSection settings={settings} showToast={showToast} />
         <BackupSection showToast={showToast} />

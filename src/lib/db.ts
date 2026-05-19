@@ -10,6 +10,17 @@ export interface Transaction {
   transactionDate: Date;
   createdAt: Date;
   updatedAt: Date;
+
+  // Recurring properties
+  isRecurring?: boolean;
+  recurringType?: "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
+  recurringStartDate?: Date;
+  recurringEndDate?: Date;
+  nextOccurrenceDate?: Date;
+  lastGeneratedDate?: Date;
+  
+  // For generated transactions to link back to their parent rule
+  recurringParentId?: number;
 }
 
 export interface SettingRecord {
@@ -48,8 +59,14 @@ export class ExpenseTrackerDB extends Dexie {
       transactions: "++id, amount, category, transactionType, accountType, transactionDate, createdAt",
       settings: "key",
       budgets: "++id, category, [month+year]",
+    });
+
+    this.version(5).stores({
+      transactions: "++id, amount, category, transactionType, accountType, transactionDate, createdAt, isRecurring, recurringParentId",
+      settings: "key",
+      budgets: "++id, category, [month+year]",
     }).upgrade(() => {
-      // Version 4 adds budgets table
+      // Version 5 adds recurring fields
     });
   }
 }

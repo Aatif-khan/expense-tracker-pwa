@@ -11,9 +11,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { useCurrency } from "@/hooks/useCurrency";
 import { getCurrencySymbol } from "@/lib/currency";
+import { RECURRING_TYPES } from "@/lib/constants";
 
 interface TransactionFormProps {
   initialData?: TransactionFormValues;
@@ -41,10 +43,12 @@ export function TransactionForm({ initialData, onSubmit, onCancel }: Transaction
       transactionType: "EXPENSE",
       accountType: "CASH",
       transactionDate: new Date(),
+      isRecurring: false,
     },
   });
 
   const transactionType = watch("transactionType");
+  const isRecurring = watch("isRecurring");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -169,6 +173,84 @@ export function TransactionForm({ initialData, onSubmit, onCancel }: Transaction
       <div className="space-y-2">
         <Label>Description (Optional)</Label>
         <Input placeholder="Note about this transaction..." {...register("description")} />
+      </div>
+
+      <div className="space-y-4 border rounded-lg p-4 bg-muted/30">
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label>Recurring Transaction</Label>
+            <p className="text-xs text-muted-foreground">Automatically log this transaction</p>
+          </div>
+          <Controller
+            control={control}
+            name="isRecurring"
+            render={({ field }) => (
+              <Switch
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+            )}
+          />
+        </div>
+
+        {isRecurring && (
+          <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="space-y-2">
+              <Label>Frequency</Label>
+              <Controller
+                control={control}
+                name="recurringType"
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value || "MONTHLY"}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Frequency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {RECURRING_TYPES.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type.charAt(0) + type.slice(1).toLowerCase()}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>End Date (Optional)</Label>
+              <Controller
+                control={control}
+                name="recurringEndDate"
+                render={({ field }) => (
+                  <Popover>
+                    <PopoverTrigger
+                      render={
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? format(field.value, "PPP") : <span>No end date</span>}
+                        </Button>
+                      }
+                    />
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                )}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="flex gap-4 pt-4">
