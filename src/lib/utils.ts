@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { CurrencyCode } from "@/lib/settingsStore";
+import { CurrencyCode } from "@/lib/types";
 import { formatCurrencyWithCode } from "@/lib/currency";
 
 export function cn(...inputs: ClassValue[]) {

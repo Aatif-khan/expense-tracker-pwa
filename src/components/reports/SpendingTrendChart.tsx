@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart
 } from "recharts";
 import { TrendPoint } from "@/lib/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +11,20 @@ import { getCurrencySymbol } from "@/lib/currency";
 
 interface SpendingTrendChartProps { data: TrendPoint[] }
 
-const CustomTooltip = ({ active, payload, label, formatCurrency }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    color: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
+  }>;
+  label?: string;
+  formatCurrency: (v: number) => string;
+}
+
+const CustomTooltip = ({ active, payload, label, formatCurrency }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     return (

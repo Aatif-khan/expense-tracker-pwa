@@ -5,11 +5,11 @@ import { startOfMonth, endOfMonth, subMonths, isWithinInterval } from "date-fns"
 import { useSettingsStore } from "@/lib/settingsStore";
 
 export function useDashboard() {
-  const { transactions, isLoading } = useTransactions();
+  const { transactions, updateTransaction, deleteTransaction } = useTransactions();
   const initialCashBalance = useSettingsStore((s) => s.initialCashBalance);
   const initialBankBalance = useSettingsStore((s) => s.initialBankBalance);
 
-  return useMemo(() => {
+  const dashboardData = useMemo(() => {
     if (!transactions) return {
       isLoading: true,
       isEmpty: true,
@@ -123,5 +123,11 @@ export function useDashboard() {
       },
       recentTransactions: transactions.slice(0, 5),
     };
-  }, [transactions, isLoading, initialCashBalance, initialBankBalance]);
+  }, [transactions, initialCashBalance, initialBankBalance]);
+
+  return {
+    ...dashboardData,
+    updateTransaction,
+    deleteTransaction,
+  };
 }

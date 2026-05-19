@@ -32,6 +32,7 @@ export function TransactionForm({ initialData, onSubmit, onCancel }: Transaction
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<TransactionFormValues>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(transactionSchema) as any,
     defaultValues: initialData || {
       amount: 0,

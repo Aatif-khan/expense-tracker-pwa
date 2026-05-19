@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SettingsSection, SettingsRow } from "./SettingsSection";
 import { Landmark, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -26,14 +26,17 @@ function BalanceInput({
   onSave: (v: number) => Promise<void>;
 }) {
   const [draft, setDraft] = useState(String(value));
+  const [prevValue, setPrevValue] = useState(value);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
   // Sync when external value changes (e.g. after reset)
-  useEffect(() => {
+  // This follows the recommended pattern for syncing props to state
+  if (value !== prevValue) {
+    setPrevValue(value);
     setDraft(String(value));
-  }, [value]);
+  }
 
   const handleSave = async () => {
     // If the value hasn't changed, don't trigger save
@@ -51,7 +54,7 @@ function BalanceInput({
       setSaving(false);
       setSaved(true);
       setTimeout(() => setSaved(false), 1800);
-    } catch (e) {
+    } catch {
       setError("Failed to save");
       setSaving(false);
     }

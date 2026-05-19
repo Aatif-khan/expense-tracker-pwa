@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-  PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend,
+  PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend
 } from "recharts";
 import { PieSlice } from "@/lib/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,20 @@ import { useCurrency } from "@/hooks/useCurrency";
 
 interface CategoryPieChartProps { data: PieSlice[] }
 
-const CustomTooltip = ({ active, payload, formatCurrency }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    color: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
+  }>;
+  label?: string;
+  formatCurrency: (v: number) => string;
+}
+
+const CustomTooltip = ({ active, payload, formatCurrency }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const item = payload[0].payload as PieSlice;
     return (

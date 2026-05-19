@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSettings } from "@/hooks/useSettings";
 import { ThemeSection } from "@/components/settings/ThemeSection";
 import { CurrencySection } from "@/components/settings/CurrencySection";
@@ -9,7 +9,7 @@ import { AppPreferencesSection } from "@/components/settings/AppPreferencesSecti
 import { BackupSection } from "@/components/settings/BackupSection";
 import { PWASection } from "@/components/settings/PWASection";
 import { DangerZoneSection } from "@/components/settings/DangerZoneSection";
-import { Toast } from "@/components/settings/Toast";
+import { Toast as SettingsToast } from "@/components/settings/SettingsToast";
 import { Settings } from "lucide-react";
 
 export type ToastMessage = {
@@ -66,7 +66,7 @@ export default function SettingsPage() {
       {/* Toast Stack */}
       <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-[calc(100%-2rem)] max-w-sm pointer-events-none">
         {toasts.map((t) => (
-          <Toast key={t.id} message={t.message} type={t.type} />
+          <SettingsToast key={t.id} message={t.message} type={t.type} />
         ))}
       </div>
     </div>

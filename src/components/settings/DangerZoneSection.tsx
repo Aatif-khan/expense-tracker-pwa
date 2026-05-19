@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SettingsSection } from "./SettingsSection";
-import { AlertTriangle, Trash2, Loader2, X } from "lucide-react";
+import { AlertTriangle, Trash2, Loader2 } from "lucide-react";
 import { resetAllData } from "@/lib/backup";
 import { cn } from "@/lib/utils";
 import type { ToastMessage } from "@/app/settings/page";

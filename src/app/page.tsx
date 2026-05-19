@@ -3,6 +3,7 @@
 import { useDashboard } from "@/hooks/useDashboard";
 import { DashboardSummary } from "@/components/dashboard/DashboardSummary";
 import { DashboardInsights } from "@/components/dashboard/DashboardInsights";
+import { DashboardBudgetWidget } from "@/components/dashboard/DashboardBudgetWidget";
 import { TransactionItem } from "@/components/transactions/TransactionItem";
 import { Button } from "@/components/ui/button";
 import { Wallet, PlusCircle, ArrowRight } from "lucide-react";
@@ -18,6 +19,13 @@ export default function Home() {
   // State for quick edit from dashboard
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
 
+  const handleUpdate = async (data: any) => {
+    if (selectedTx?.id) {
+      await dashboard.updateTransaction(selectedTx.id, data);
+      setSelectedTx(null);
+    }
+  };
+
   if (dashboard.isLoading) {
     return <div className="p-4 space-y-6 max-w-lg mx-auto animate-pulse flex flex-col items-center justify-center min-h-[50vh]">
       <div className="h-8 w-32 bg-muted rounded mb-8"></div>
@@ -31,7 +39,7 @@ export default function Home() {
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-xl flex items-center justify-between py-4 mb-2 -mx-4 px-4 border-b border-border/40">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Overview</h1>
-          <p className="text-muted-foreground text-sm">Here's your financial summary</p>
+          <p className="text-muted-foreground text-sm">Here&apos;s your financial summary</p>
         </div>
         <div className="h-10 w-10 bg-primary/10 rounded-full flex items-center justify-center shadow-sm">
           <Wallet className="text-primary h-5 w-5" />
@@ -45,7 +53,7 @@ export default function Home() {
           </div>
           <h2 className="text-xl font-semibold mb-2">Welcome to Expense Tracker!</h2>
           <p className="text-muted-foreground text-sm mb-6 max-w-[250px]">
-            You don't have any transactions yet. Add your first income or expense to get started.
+            You don&apos;t have any transactions yet. Add your first income or expense to get started.
           </p>
           <Link href="/add">
             <Button className="gap-2">
@@ -59,6 +67,8 @@ export default function Home() {
           <DashboardSummary balances={dashboard.balances} monthly={dashboard.monthly} />
           
           <DashboardInsights insights={dashboard.insights} />
+          
+          <DashboardBudgetWidget />
 
           <div className="pt-2">
             <div className="flex items-center justify-between mb-4 px-1">
@@ -95,7 +105,7 @@ export default function Home() {
             {selectedTx && (
               <TransactionForm 
                 initialData={selectedTx} 
-                onSubmit={() => setSelectedTx(null)} 
+                onSubmit={handleUpdate} 
                 onCancel={() => setSelectedTx(null)} 
               />
             )}
