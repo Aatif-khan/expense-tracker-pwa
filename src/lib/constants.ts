@@ -16,6 +16,8 @@ export const CATEGORIES = [
 export const ACCOUNT_TYPES = ["CASH", "BANK"] as const;
 export const TRANSACTION_TYPES = ["INCOME", "EXPENSE"] as const;
 
+export const RECURRING_TYPES = ["DAILY", "WEEKLY", "MONTHLY", "YEARLY"] as const;
+
 export const transactionSchema = z.object({
   amount: z.coerce.number().positive("Amount must be greater than 0"),
   category: z.string().min(1, "Category is required"),
@@ -25,6 +27,9 @@ export const transactionSchema = z.object({
   transactionDate: z.date({
     message: "A date of transaction is required.",
   }),
+  isRecurring: z.boolean().optional(),
+  recurringType: z.enum(RECURRING_TYPES).optional(),
+  recurringEndDate: z.date().optional(),
 });
 
 export type TransactionFormValues = z.infer<typeof transactionSchema>;

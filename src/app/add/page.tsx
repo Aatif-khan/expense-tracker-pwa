@@ -11,7 +11,11 @@ export default function AddTransactionPage() {
 
   const handleSubmit = async (data: TransactionFormValues) => {
     await addTransaction(data);
-    router.push("/");
+    if (data.isRecurring) {
+      router.push("/recurring");
+    } else {
+      router.push("/");
+    }
   };
 
   return (

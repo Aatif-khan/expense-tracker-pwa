@@ -4,6 +4,7 @@ import { useDashboard } from "@/hooks/useDashboard";
 import { DashboardSummary } from "@/components/dashboard/DashboardSummary";
 import { DashboardInsights } from "@/components/dashboard/DashboardInsights";
 import { DashboardBudgetWidget } from "@/components/dashboard/DashboardBudgetWidget";
+import { RecurringDashboardWidget } from "@/components/recurring/RecurringDashboardWidget";
 import { TransactionItem } from "@/components/transactions/TransactionItem";
 import { Button } from "@/components/ui/button";
 import { Wallet, PlusCircle, ArrowRight } from "lucide-react";
@@ -69,6 +70,7 @@ export default function Home() {
           <DashboardInsights insights={dashboard.insights} />
           
           <DashboardBudgetWidget />
+          <RecurringDashboardWidget />
 
           <div className="pt-2">
             <div className="flex items-center justify-between mb-4 px-1">
