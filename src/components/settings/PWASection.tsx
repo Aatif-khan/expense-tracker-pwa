@@ -6,21 +6,32 @@ import { Smartphone, Wifi, WifiOff, Tag } from "lucide-react";
 
 const APP_VERSION = "1.0.0";
 
+// Define a proper type for the beforeinstallprompt event
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed', platform: string }>;
+}
+
 export function PWASection() {
   const [isOnline, setIsOnline] = useState(true);
   const [installable, setInstallable] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
+    // Sync initial state once on mount to avoid warning
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOnline(navigator.onLine);
+
     const onOnline = () => setIsOnline(true);
     const onOffline = () => setIsOnline(false);
     window.addEventListener("online", onOnline);
     window.addEventListener("offline", onOffline);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handler = (e: any) => { e.preventDefault(); setDeferredPrompt(e); setInstallable(true); };
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setInstallable(true);
+    };
     window.addEventListener("beforeinstallprompt", handler);
 
     return () => {
@@ -32,7 +43,7 @@ export function PWASection() {
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
-    deferredPrompt.prompt();
+    await deferredPrompt.prompt();
     await deferredPrompt.userChoice;
     setDeferredPrompt(null);
     setInstallable(false);

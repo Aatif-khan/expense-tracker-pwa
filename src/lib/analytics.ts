@@ -4,7 +4,7 @@ import {
   startOfWeek, endOfWeek,
   startOfMonth, endOfMonth,
   startOfYear, endOfYear,
-  format, eachDayOfInterval, eachWeekOfInterval, eachMonthOfInterval,
+  format, eachDayOfInterval, eachMonthOfInterval,
   isWithinInterval,
 } from "date-fns";
 

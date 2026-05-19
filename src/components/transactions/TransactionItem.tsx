@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import { Transaction } from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ArrowDownIcon, ArrowUpIcon, CreditCard, Wallet } from "lucide-react";
 import { useCurrency } from "@/hooks/useCurrency";

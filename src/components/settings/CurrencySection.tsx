@@ -4,7 +4,7 @@ import { SettingsSection, SettingsRow } from "./SettingsSection";
 import { Coins } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CURRENCIES } from "@/lib/currency";
-import { CurrencyCode } from "@/lib/settingsStore";
+import { CurrencyCode } from "@/lib/types";
 import type { ToastMessage } from "@/app/settings/page";
 import type { useSettings } from "@/hooks/useSettings";
 

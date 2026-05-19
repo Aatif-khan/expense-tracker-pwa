@@ -3,14 +3,23 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ReportSummary } from "@/lib/analytics";
 import { useCurrency } from "@/hooks/useCurrency";
-import { ArrowDownIcon, ArrowUpIcon, PiggyBank, Receipt } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, PiggyBank, Receipt, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SummaryCardsProps { summary: ReportSummary }
 
+interface SummaryCardItem {
+  label: string;
+  value: number;
+  icon: LucideIcon;
+  color: "emerald" | "red" | "indigo";
+  prefix?: string;
+  isCount?: boolean;
+}
+
 export function SummaryCards({ summary }: SummaryCardsProps) {
   const { format: formatCurrency } = useCurrency();
-  const cards = [
+  const cards: SummaryCardItem[] = [
     { label: "Income",       value: summary.totalIncome,       icon: ArrowUpIcon,   color: "emerald", prefix: "+" },
     { label: "Expenses",     value: summary.totalExpenses,     icon: ArrowDownIcon, color: "red",     prefix: "-" },
     { label: "Net Savings",  value: summary.netSavings,        icon: PiggyBank,     color: summary.netSavings >= 0 ? "emerald" : "red", prefix: summary.netSavings >= 0 ? "+" : "" },
@@ -51,7 +60,7 @@ export function SummaryCards({ summary }: SummaryCardsProps) {
                 </div>
               </div>
               <p className={cn("text-lg font-bold leading-tight", textColor)}>
-                {(c as any).isCount ? c.value : `${c.prefix}${formatCurrency(Math.abs(c.value as number))}`}
+                {c.isCount ? c.value : `${c.prefix}${formatCurrency(Math.abs(c.value))}`}
               </p>
             </CardContent>
           </Card>

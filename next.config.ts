@@ -9,6 +9,8 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  // Allow phone on local network to connect without HMR blocked errors
+  allowedDevOrigins: ["192.168.1.33"],
 };
 
 export default withPWA(nextConfig);

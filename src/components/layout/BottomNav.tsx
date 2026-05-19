@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, PieChart, PlusCircle, Settings } from "lucide-react";
+import { Home, PieChart, PlusCircle, Settings, Target } from "lucide-react";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -10,6 +10,7 @@ export function BottomNav() {
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/stats", label: "Stats", icon: PieChart },
+    { href: "/budgets", label: "Budgets", icon: Target },
     { href: "/add", label: "Add", icon: PlusCircle },
     { href: "/settings", label: "Settings", icon: Settings },
   ];

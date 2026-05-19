@@ -2,7 +2,7 @@
 
 import React from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from "recharts";
 import { BarPoint } from "@/lib/analytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,12 +11,25 @@ import { getCurrencySymbol } from "@/lib/currency";
 
 interface IncomeExpenseBarChartProps { data: BarPoint[] }
 
-const CustomTooltip = ({ active, payload, label, formatCurrency }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+    color: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
+  }>;
+  label?: string;
+  formatCurrency: (v: number) => string;
+}
+
+const CustomTooltip = ({ active, payload, label, formatCurrency }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-background border border-border rounded-lg shadow-md p-3 text-sm space-y-1">
         <p className="font-semibold text-xs text-muted-foreground mb-1">{label}</p>
-        {payload.map((p: any) => (
+        {payload.map((p) => (
           <p key={p.name} style={{ color: p.color }}>
             {p.name}: {typeof p.value === "number" ? formatCurrency(p.value) : p.value}
           </p>
