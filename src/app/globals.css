@@ -72,3 +72,20 @@
     transition: none !important;
   }
 }
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top), 1rem);
+  }
+  .min-h-safe {
+    min-height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
+  }
+  
+  /* Disable tap highlight on mobile for native feel */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}

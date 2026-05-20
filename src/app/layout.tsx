@@ -30,6 +30,7 @@ export const viewport: Viewport = {
 };
 
 import { RecurringProcessor } from "@/components/recurring/RecurringProcessor";
+import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 
 export default function RootLayout({
   children,
@@ -42,7 +43,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -52,6 +53,7 @@ export default function RootLayout({
           {/* Hydrate settings from IndexedDB on boot */}
           <SettingsHydrator />
           <RecurringProcessor />
+          <OfflineIndicator />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
         </ThemeProvider>
