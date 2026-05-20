@@ -23,14 +23,22 @@ export default function StatsPage() {
   // Loading skeleton
   if (reports.isLoading) {
     return (
-      <div className="p-4 space-y-4 max-w-lg mx-auto animate-pulse pb-24">
-        <div className="h-8 w-40 bg-muted rounded mt-4" />
-        <div className="h-10 w-full bg-muted rounded-full" />
-        <div className="grid grid-cols-2 gap-3">
-          {[1,2,3,4].map(i => <div key={i} className="h-24 bg-muted rounded-xl" />)}
+      <div className="p-4 pt-8 space-y-6 max-w-lg mx-auto min-h-[80vh]">
+        <div className="flex justify-between items-center mb-8">
+          <div className="space-y-2">
+            <div className="h-8 w-32 bg-muted rounded-md animate-pulse"></div>
+            <div className="h-4 w-40 bg-muted/60 rounded-md animate-pulse"></div>
+          </div>
+          <div className="h-8 w-24 bg-muted rounded-md animate-pulse"></div>
         </div>
-        <div className="h-56 bg-muted rounded-xl" />
-        <div className="h-56 bg-muted rounded-xl" />
+        <div className="flex gap-2">
+          {[1,2,3,4].map(i => <div key={i} className="h-10 flex-1 bg-muted rounded-lg animate-pulse"></div>)}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {[1,2,3,4].map(i => <div key={i} className="h-24 bg-muted/60 rounded-2xl animate-pulse"></div>)}
+        </div>
+        <div className="h-64 bg-muted/80 rounded-2xl animate-pulse"></div>
+        <div className="h-64 bg-muted/80 rounded-2xl animate-pulse"></div>
       </div>
     );
   }
@@ -38,16 +46,19 @@ export default function StatsPage() {
   // Fully empty DB
   if (reports.allEmpty) {
     return (
-      <div className="p-4 max-w-lg mx-auto pb-24 flex flex-col items-center justify-center min-h-[60vh] text-center">
-        <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <BarChart2 className="h-8 w-8 text-primary" />
+      <div className="p-4 pt-16 max-w-lg mx-auto pb-24 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-95 duration-500">
+        <div className="h-24 w-24 bg-primary/5 rounded-full flex items-center justify-center mb-6 shadow-inner">
+          <BarChart2 className="h-12 w-12 text-primary opacity-80" />
         </div>
-        <h2 className="text-xl font-semibold mb-2">No Data Yet</h2>
-        <p className="text-muted-foreground text-sm mb-6 max-w-[260px]">
-          Add some transactions to start seeing analytics and reports here.
+        <h2 className="text-2xl font-bold mb-3 tracking-tight">No Insights Yet</h2>
+        <p className="text-muted-foreground text-sm mb-8 max-w-[260px] leading-relaxed">
+          Start logging your expenses and incomes to unlock beautiful charts and analytics here.
         </p>
-        <Link href="/add">
-          <Button className="gap-2"><PlusCircle className="h-4 w-4" />Add Transaction</Button>
+        <Link href="/add" passHref>
+          <Button size="lg" className="gap-2 rounded-full shadow-lg shadow-primary/20 transition-transform active:scale-95">
+            <PlusCircle className="h-5 w-5" />
+            Log First Transaction
+          </Button>
         </Link>
       </div>
     );

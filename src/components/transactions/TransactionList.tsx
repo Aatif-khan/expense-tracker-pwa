@@ -21,7 +21,16 @@ export function TransactionList() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   if (isLoading) {
-    return <div className="py-8 text-center text-muted-foreground animate-pulse">Loading transactions...</div>;
+    return (
+      <div className="space-y-4">
+        <div className="h-10 w-full bg-muted/60 rounded-xl animate-pulse"></div>
+        <div className="space-y-3 mt-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="h-16 w-full bg-muted/40 rounded-xl animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   const filteredTransactions = transactions?.filter(tx => {
@@ -74,10 +83,18 @@ export function TransactionList() {
     <div className="space-y-4">
       <TransactionFilters filters={filters} onFilterChange={setFilters} />
       
-      <div className="space-y-1">
+      <div className="space-y-2">
         {filteredTransactions?.length === 0 ? (
-          <div className="py-10 text-center text-muted-foreground">
-            <p>No transactions found.</p>
+          <div className="py-16 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-95 duration-300">
+            <div className="h-20 w-20 bg-muted rounded-full flex items-center justify-center mb-4">
+              <svg className="w-10 h-10 text-muted-foreground opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium">No transactions found</h3>
+            <p className="text-sm text-muted-foreground mt-1 max-w-[200px]">
+              Try adjusting your filters or add a new transaction.
+            </p>
           </div>
         ) : (
           filteredTransactions?.map((tx, index) => (

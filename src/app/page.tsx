@@ -28,11 +28,28 @@ export default function Home() {
   };
 
   if (dashboard.isLoading) {
-    return <div className="p-4 space-y-6 max-w-lg mx-auto animate-pulse flex flex-col items-center justify-center min-h-[50vh]">
-      <div className="h-8 w-32 bg-muted rounded mb-8"></div>
-      <div className="h-48 w-full bg-muted rounded-xl"></div>
-      <div className="h-24 w-full bg-muted rounded-xl"></div>
-    </div>;
+    return (
+      <div className="p-4 pt-8 space-y-6 max-w-lg mx-auto min-h-[80vh]">
+        <div className="flex justify-between items-center mb-8">
+          <div className="space-y-2">
+            <div className="h-8 w-32 bg-muted rounded-md animate-pulse"></div>
+            <div className="h-4 w-48 bg-muted/60 rounded-md animate-pulse"></div>
+          </div>
+          <div className="h-10 w-10 bg-muted rounded-full animate-pulse"></div>
+        </div>
+        <div className="h-48 w-full bg-muted/80 rounded-2xl animate-pulse"></div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="h-24 w-full bg-muted/60 rounded-xl animate-pulse"></div>
+          <div className="h-24 w-full bg-muted/60 rounded-xl animate-pulse"></div>
+        </div>
+        <div className="space-y-4 pt-4">
+          <div className="h-5 w-32 bg-muted rounded animate-pulse"></div>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-16 w-full bg-muted/40 rounded-xl animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -48,18 +65,18 @@ export default function Home() {
       </header>
 
       {dashboard.isEmpty ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center bg-muted/30 rounded-2xl border border-dashed p-6">
-          <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-            <Wallet className="h-8 w-8 text-primary" />
+        <div className="flex flex-col items-center justify-center py-16 text-center animate-in fade-in zoom-in-95 duration-500">
+          <div className="h-24 w-24 bg-primary/5 rounded-full flex items-center justify-center mb-6 shadow-inner">
+            <Wallet className="h-12 w-12 text-primary opacity-80" />
           </div>
-          <h2 className="text-xl font-semibold mb-2">Welcome to Expense Tracker!</h2>
-          <p className="text-muted-foreground text-sm mb-6 max-w-[250px]">
-            You don&apos;t have any transactions yet. Add your first income or expense to get started.
+          <h2 className="text-2xl font-bold mb-3 tracking-tight">Welcome to Expenses</h2>
+          <p className="text-muted-foreground text-sm mb-8 max-w-[260px] leading-relaxed">
+            Your offline-first financial companion. Add your first transaction to unlock insights, budgets, and more.
           </p>
-          <Link href="/add">
-            <Button className="gap-2">
-              <PlusCircle className="h-4 w-4" />
-              Add Transaction
+          <Link href="/add" passHref>
+            <Button size="lg" className="gap-2 rounded-full shadow-lg shadow-primary/20 transition-transform active:scale-95">
+              <PlusCircle className="h-5 w-5" />
+              Add First Transaction
             </Button>
           </Link>
         </div>
