@@ -2,23 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { SettingsSection, SettingsRow } from "./SettingsSection";
-import { Smartphone, Wifi, WifiOff, Tag } from "lucide-react";
+import { Smartphone, Wifi, WifiOff, Tag, CheckCircle2, ChevronRight } from "lucide-react";
+import { usePwaStore } from "@/lib/pwaStore";
 
 const APP_VERSION = "1.0.0";
 
-// Define a proper type for the beforeinstallprompt event
-interface BeforeInstallPromptEvent extends Event {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed', platform: string }>;
-}
-
 export function PWASection() {
   const [isOnline, setIsOnline] = useState(true);
-  const [installable, setInstallable] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const { isStandalone, setIsOpen } = usePwaStore();
 
   useEffect(() => {
-    // Sync initial state once on mount to avoid warning
+    // Sync initial state once on mount to avoid hydration warnings
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOnline(navigator.onLine);
 
@@ -27,26 +21,14 @@ export function PWASection() {
     window.addEventListener("online", onOnline);
     window.addEventListener("offline", onOffline);
 
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setInstallable(true);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-
     return () => {
       window.removeEventListener("online", onOnline);
       window.removeEventListener("offline", onOffline);
-      window.removeEventListener("beforeinstallprompt", handler);
     };
   }, []);
 
-  const handleInstall = async () => {
-    if (!deferredPrompt) return;
-    await deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    setDeferredPrompt(null);
-    setInstallable(false);
+  const triggerInstallModal = () => {
+    setIsOpen(true);
   };
 
   return (
@@ -69,24 +51,31 @@ export function PWASection() {
         </div>
       </SettingsRow>
 
-      {installable && (
-        <SettingsRow label="Install App" hint="Add to your home screen for the best experience">
+      {isStandalone ? (
+        /* If already installed as a standalone PWA, show success update message */
+        <div className="px-4 py-3 border-t border-border/40 bg-emerald-500/5 flex items-start gap-3">
+          <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+          <div className="space-y-0.5">
+            <p className="text-xs font-bold text-emerald-800 dark:text-emerald-400">
+              Installed & Up to Date
+            </p>
+            <p className="text-[11px] text-emerald-700/80 dark:text-emerald-500/90 leading-normal">
+              You are currently running the standalone app on your device. Offline data synchronisation and local storage are fully active.
+            </p>
+          </div>
+        </div>
+      ) : (
+        /* If not installed, show the install trigger button */
+        <SettingsRow label="Install App" hint="Add to your home screen for a premium offline experience">
           <button
             id="btn-install-pwa"
-            onClick={handleInstall}
-            className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors"
+            onClick={triggerInstallModal}
+            className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors flex items-center gap-1"
           >
             Install
+            <ChevronRight className="h-3.5 w-3.5" />
           </button>
         </SettingsRow>
-      )}
-
-      {!installable && (
-        <div className="px-4 py-3 border-t border-border/40">
-          <p className="text-xs text-muted-foreground">
-            💡 To install: use your browser&apos;s &ldquo;Add to Home Screen&rdquo; or &ldquo;Install App&rdquo; option in the address bar menu.
-          </p>
-        </div>
       )}
     </SettingsSection>
   );

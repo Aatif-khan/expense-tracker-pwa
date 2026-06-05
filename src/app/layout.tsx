@@ -16,13 +16,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Expense Tracker",
-  description: "Offline-first personal expense tracker",
+  title: {
+    default: "Expenses | Premium Personal Finance Tracker",
+    template: "%s | Expenses",
+  },
+  description: "A fast, offline-first personal expense tracker. Manage budgets, track spending, and view insights natively on your device.",
+  keywords: ["expense tracker", "budget planner", "finance", "offline PWA", "money management"],
+  authors: [{ name: "Developer" }],
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Expenses",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://expenses-tracker-pwa.vercel.app/",
+    title: "Expenses | Premium Personal Finance Tracker",
+    description: "Take control of your money with zero friction. A premium, offline-first personal finance application.",
+    siteName: "Expenses App",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Expenses | Premium Personal Finance Tracker",
+    description: "Take control of your money with zero friction. A premium, offline-first personal finance application.",
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
   width: "device-width",
   initialScale: 1,
   minimumScale: 1,
@@ -31,6 +60,7 @@ export const viewport: Viewport = {
 
 import { RecurringProcessor } from "@/components/recurring/RecurringProcessor";
 import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
+import { PWAInstallPrompt } from "@/components/layout/PWAInstallPrompt";
 
 export default function RootLayout({
   children,
@@ -54,6 +84,7 @@ export default function RootLayout({
           <SettingsHydrator />
           <RecurringProcessor />
           <OfflineIndicator />
+          <PWAInstallPrompt />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
         </ThemeProvider>
