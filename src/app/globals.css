@@ -75,10 +75,10 @@
 
 @layer utilities {
   .pb-safe {
-    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .pt-safe {
-    padding-top: max(env(safe-area-inset-top), 1rem);
+    padding-top: env(safe-area-inset-top);
   }
   .min-h-safe {
     min-height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));

@@ -7,6 +7,7 @@ export interface AppPreferences {
   compactMode: boolean;
   insightsEnabled: boolean;
   notificationsEnabled: boolean;
+  hasCompletedOnboarding: boolean;
 }
 
 export const DEFAULT_PREFERENCES: AppPreferences = {
@@ -14,4 +15,5 @@ export const DEFAULT_PREFERENCES: AppPreferences = {
   compactMode: false,
   insightsEnabled: true,
   notificationsEnabled: true,
+  hasCompletedOnboarding: false,
 };

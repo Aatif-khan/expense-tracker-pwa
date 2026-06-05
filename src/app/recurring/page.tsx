@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { TransactionForm } from "@/components/transactions/TransactionForm";
+import { TransactionFormValues } from "@/lib/constants";
 
 export default function RecurringPage() {
   const router = useRouter();
@@ -46,13 +47,13 @@ export default function RecurringPage() {
     }
   };
 
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: TransactionFormValues) => {
     if (selectedTx?.id) {
       let nextOccurrenceDate = selectedTx.nextOccurrenceDate;
       // If frequency changed or it was paused, we might need to recalculate, but to keep it simple, we just save the form data
       if (data.isRecurring && data.recurringType && !nextOccurrenceDate) {
         const { calculateNextOccurrence } = await import("@/lib/recurrence");
-        nextOccurrenceDate = calculateNextOccurrence(data.transactionDate, data.recurringType);
+        nextOccurrenceDate = calculateNextOccurrence(data.transactionDate || selectedTx.transactionDate, data.recurringType);
       }
       
       await db.transactions.update(selectedTx.id, {
@@ -169,7 +170,7 @@ export default function RecurringPage() {
           <div className="p-6 max-h-[80vh] overflow-y-auto">
             {selectedTx && (
               <TransactionForm 
-                initialData={selectedTx as any} 
+                initialData={selectedTx as Transaction} 
                 onSubmit={handleUpdate} 
                 onCancel={() => setSelectedTx(null)} 
               />

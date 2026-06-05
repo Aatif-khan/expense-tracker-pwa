@@ -114,6 +114,35 @@ export function DangerZoneSection({ settings, showToast }: DangerZoneSectionProp
         icon={<AlertTriangle className="h-4 w-4 text-red-500" />}
         className="border-red-200/60 dark:border-red-900/40"
       >
+        <div className="px-4 py-4 flex items-center justify-between gap-4 border-b border-border/40">
+          <div>
+            <p className="text-sm font-medium text-foreground">Generate Demo Data</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Wipes current data and populates app for screenshots
+            </p>
+          </div>
+          <button
+            onClick={async () => {
+              try {
+                const { generateDemoData } = await import("@/lib/demoData");
+                await generateDemoData();
+                showToast("Demo data generated!", "success");
+                setTimeout(() => window.location.reload(), 1000);
+              } catch {
+                showToast("Failed to generate demo data", "error");
+              }
+            }}
+            className={cn(
+              "shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold",
+              "bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400",
+              "hover:bg-indigo-100 dark:hover:bg-indigo-950/60 transition-colors",
+              "border border-indigo-200/60 dark:border-indigo-800/40"
+            )}
+          >
+            Generate
+          </button>
+        </div>
+
         <div className="px-4 py-4 flex items-center justify-between gap-4">
           <div>
             <p className="text-sm font-medium text-foreground">Reset All Data</p>

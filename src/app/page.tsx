@@ -11,21 +11,35 @@ import { Wallet, PlusCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Transaction } from "@/lib/db";
+import { TransactionFormValues } from "@/lib/constants";
 import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import { WelcomeScreen } from "@/components/onboarding/WelcomeScreen";
+import { useSettingsStore } from "@/lib/settingsStore";
+
 export default function Home() {
   const dashboard = useDashboard();
+  const hydrated = useSettingsStore((s) => s.hydrated);
+  const preferences = useSettingsStore((s) => s.preferences);
   
   // State for quick edit from dashboard
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
 
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: TransactionFormValues) => {
     if (selectedTx?.id) {
       await dashboard.updateTransaction(selectedTx.id, data);
       setSelectedTx(null);
     }
   };
+
+  if (!hydrated) {
+    return null; // Prevent flash during hydration
+  }
+
+  if (!preferences.hasCompletedOnboarding) {
+    return <WelcomeScreen />;
+  }
 
   if (dashboard.isLoading) {
     return (
