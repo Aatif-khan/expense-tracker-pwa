@@ -198,7 +198,7 @@ export function PWAInstallPrompt() {
           </div>
         )}
 
-        <DialogFooter className="flex flex-col gap-2 mt-4">
+        <DialogFooter className="-mx-6 -mb-6 mt-6 p-6 rounded-b-2xl flex flex-col-reverse gap-2 sm:flex-col-reverse sm:justify-start">
           {isIOSDevice || !deferredPrompt ? (
             <button 
               onClick={handleDismiss}

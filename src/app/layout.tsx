@@ -61,6 +61,7 @@ export const viewport: Viewport = {
 import { RecurringProcessor } from "@/components/recurring/RecurringProcessor";
 import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { PWAInstallPrompt } from "@/components/layout/PWAInstallPrompt";
+import { PWAUpdateToast } from "@/components/layout/PWAUpdateToast";
 
 export default function RootLayout({
   children,
@@ -85,6 +86,7 @@ export default function RootLayout({
           <RecurringProcessor />
           <OfflineIndicator />
           <PWAInstallPrompt />
+          <PWAUpdateToast />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
         </ThemeProvider>
