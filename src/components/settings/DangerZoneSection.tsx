@@ -27,7 +27,7 @@ function ConfirmResetModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -35,7 +35,7 @@ function ConfirmResetModal({
       />
 
       {/* Sheet */}
-      <div className="relative z-10 w-full max-w-sm bg-card rounded-t-3xl sm:rounded-2xl shadow-2xl border border-border/60 overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+      <div className="relative z-10 w-full max-w-sm bg-card rounded-2xl shadow-2xl border border-border/60 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
         <div className="p-6">
           {/* Icon */}
           <div className="h-14 w-14 rounded-2xl bg-red-100 dark:bg-red-950/40 flex items-center justify-center mx-auto mb-4">
