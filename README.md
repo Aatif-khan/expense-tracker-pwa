@@ -19,8 +19,6 @@ CashLoom is an offline-first personal finance Progressive Web App that helps you
 | :---: | :---: | :---: | :---: |
 | ![Dashboard](./public/screenshots/dashboard.png) | ![Analytics](./public/screenshots/analytics.png) | ![Budgets](./public/screenshots/budgets.png) | ![Recurring](./public/screenshots/recurring.png) |
 
-*(Replace with your actual screenshots after generating demo data)*
-
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
