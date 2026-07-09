@@ -83,7 +83,7 @@ export default function Home() {
           <div className="h-24 w-24 bg-primary/5 rounded-full flex items-center justify-center mb-6 shadow-inner">
             <Wallet className="h-12 w-12 text-primary opacity-80" />
           </div>
-          <h2 className="text-2xl font-bold mb-3 tracking-tight">Welcome to Expenses</h2>
+          <h2 className="text-2xl font-bold mb-3 tracking-tight">Welcome to CashLoom</h2>
           <p className="text-muted-foreground text-sm mb-8 max-w-[260px] leading-relaxed">
             Your offline-first financial companion. Add your first transaction to unlock insights, budgets, and more.
           </p>

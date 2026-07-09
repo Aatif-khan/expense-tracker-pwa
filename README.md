@@ -1,6 +1,6 @@
-# Expenses PWA
+# CashLoom
 
-A premium, offline-first personal finance tracker built as a Progressive Web App (PWA). Take control of your money with zero friction, intelligent analytics, and absolute privacy.
+CashLoom is an offline-first personal finance Progressive Web App that helps you track income and expenses, manage budgets, monitor recurring transactions, analyze spending with interactive reports, and keep complete control of your financial data. All data is stored locally on your device using IndexedDB, ensuring privacy, speed, and offline access.
 
 ![Expenses PWA Banner](./public/screenshots/banner.png) <!-- Add your banner screenshot here -->
 
@@ -41,8 +41,8 @@ A premium, offline-first personal finance tracker built as a Progressive Web App
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/expense-tracker.git
-   cd expense-tracker
+   git clone https://github.com/yourusername/cashloom.git
+   cd cashloom
    ```
 
 2. **Install dependencies**

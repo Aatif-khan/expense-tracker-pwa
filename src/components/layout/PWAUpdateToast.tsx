@@ -79,7 +79,7 @@ export function PWAUpdateToast() {
             Update Available
           </h4>
           <p className="text-xs text-muted-foreground leading-normal">
-            A new version of Expenses is ready. Reload to apply the updates.
+            A new version of CashLoom is ready. Reload to apply the updates.
           </p>
         </div>
         <button
