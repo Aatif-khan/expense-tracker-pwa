@@ -44,7 +44,7 @@ export function WelcomeScreen() {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6 shadow-inner">
               <Wallet className="w-10 h-10 text-primary" />
             </div>
-            <h1 className="text-3xl font-bold tracking-tight mb-3">Welcome to Expenses</h1>
+            <h1 className="text-3xl font-bold tracking-tight mb-3">Welcome to CashLoom</h1>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-[280px] mx-auto">
               Your personal, offline-first finance companion. Take control of your money with zero friction.
             </p>

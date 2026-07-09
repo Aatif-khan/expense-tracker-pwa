@@ -17,17 +17,27 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Expenses | Premium Personal Finance Tracker",
-    template: "%s | Expenses",
+    default: "CashLoom | Premium Personal Finance Tracker",
+    template: "%s | CashLoom",
   },
-  description: "A fast, offline-first personal expense tracker. Manage budgets, track spending, and view insights natively on your device.",
+  description: "CashLoom is an offline-first personal finance Progressive Web App that helps you track income and expenses, manage budgets, monitor recurring transactions, analyze spending with interactive reports, and keep complete control of your financial data. All data is stored locally on your device using IndexedDB, ensuring privacy, speed, and offline access.",
   keywords: ["expense tracker", "budget planner", "finance", "offline PWA", "money management"],
   authors: [{ name: "Developer" }],
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Expenses",
+    title: "CashLoom",
   },
   formatDetection: {
     telephone: false,
@@ -35,15 +45,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://expenses-tracker-pwa.vercel.app/",
-    title: "Expenses | Premium Personal Finance Tracker",
-    description: "Take control of your money with zero friction. A premium, offline-first personal finance application.",
-    siteName: "Expenses App",
+    url: "https://cashloom.vercel.app/",
+    title: "CashLoom | Premium Personal Finance Tracker",
+    description: "CashLoom is an offline-first personal finance Progressive Web App that helps you track income and expenses, manage budgets, monitor recurring transactions, analyze spending with interactive reports, and keep complete control of your financial data.",
+    siteName: "CashLoom App",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Expenses | Premium Personal Finance Tracker",
-    description: "Take control of your money with zero friction. A premium, offline-first personal finance application.",
+    title: "CashLoom | Premium Personal Finance Tracker",
+    description: "CashLoom is an offline-first personal finance Progressive Web App that helps you track income and expenses, manage budgets, monitor recurring transactions, analyze spending with interactive reports, and keep complete control of your financial data.",
   },
 };
 

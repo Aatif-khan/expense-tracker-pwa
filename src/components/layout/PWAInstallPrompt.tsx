@@ -120,10 +120,10 @@ export function PWAInstallPrompt() {
           
           <div className="space-y-1">
             <DialogTitle className="text-xl font-bold tracking-tight text-foreground">
-              Install Expenses App
+              Install CashLoom App
             </DialogTitle>
             <DialogDescription className="text-muted-foreground text-sm px-1">
-              Add Expenses to your Home Screen for faster access, offline personal finance tracking, and a native experience!
+              Add CashLoom to your Home Screen for faster access, offline personal finance tracking, and a native experience!
             </DialogDescription>
           </div>
         </DialogHeader>
