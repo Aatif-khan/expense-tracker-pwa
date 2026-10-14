@@ -72,6 +72,7 @@ import { RecurringProcessor } from "@/components/recurring/RecurringProcessor";
 import { OfflineIndicator } from "@/components/layout/OfflineIndicator";
 import { PWAInstallPrompt } from "@/components/layout/PWAInstallPrompt";
 import { PWAUpdateToast } from "@/components/layout/PWAUpdateToast";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
   children,
@@ -99,6 +100,7 @@ export default function RootLayout({
           <PWAUpdateToast />
           <main className="flex-1 pb-16">{children}</main>
           <BottomNav />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
